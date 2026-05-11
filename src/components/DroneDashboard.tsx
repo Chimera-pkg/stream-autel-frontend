@@ -12,7 +12,8 @@ interface Telemetry {
   speed: number;
 }
 
-const socket = io('http://localhost:4000');
+const HOST = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
+const socket = io(`http://${HOST}:4000`);
 
 export const DroneDashboard: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -23,7 +24,7 @@ export const DroneDashboard: React.FC = () => {
     // 1. Setup Video Stream
     if (videoRef.current && Hls.isSupported()) {
       const hls = new Hls();
-      hls.loadSource('http://localhost:8000/live/autelv2/index.m3u8');
+      hls.loadSource(`http://${HOST}:8000/live/autelv2/index.m3u8`);
       hls.attachMedia(videoRef.current);
     }
 
